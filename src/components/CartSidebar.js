@@ -8,12 +8,12 @@ const CartSidebar = () => {
   return (
     <div className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
       <div className="cart-header">
-        <h2>Your Cart</h2>
+        <h2>Tu carrito</h2>
         <button onClick={closeCart} className="close-btn">&times;</button>
       </div>
       <div className="cart-items">
         {cartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
+          <p>Tu carrito está vacío.</p>
         ) : (
           cartItems.map(item => (
             <div key={item.id} className="cart-item">
