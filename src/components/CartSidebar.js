@@ -1,32 +1,42 @@
-import React from "react";
+import React from 'react';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
-function CartSidebar({ isOpen, cartItems, total, toggleCart, removeFromCart, updateQuantity }) {
-  if (!isOpen) return null;
+const CartSidebar = () => {
+  const { isCartOpen, closeCart, cartItems, cartTotal, removeFromCart } = useCart();
 
   return (
-    <aside className="cart-sidebar">
-      <h3>Carrito de Compras</h3>
-      <button onClick={toggleCart}>Cerrar</button>
-      {cartItems.length === 0 ? (
-        <p>El carrito está vacío.</p>
-      ) : (
-        cartItems.map(item => (
-          <div key={item.id}>
-            <h4>{item.name}</h4>
-            <p>Precio: ${item.price.toLocaleString()}</p>
-            <p>
-              Cantidad: 
-              <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-              {item.quantity}
-              <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
-            </p>
-            <button onClick={() => removeFromCart(item.id)}>Eliminar</button>
-          </div>
-        ))
+    <div className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
+      <div className="cart-header">
+        <h2>Your Cart</h2>
+        <button onClick={closeCart} className="close-btn">&times;</button>
+      </div>
+      <div className="cart-items">
+        {cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          cartItems.map(item => (
+            <div key={item.id} className="cart-item">
+              <img src={item.image} alt={item.title} />
+              <div className="cart-item-details">
+                <h4>{item.title}</h4>
+                <p>{item.quantity} x ${item.price.toFixed(2)}</p>
+              </div>
+              <button onClick={() => removeFromCart(item.id)} className="close-btn">&times;</button>
+            </div>
+          ))
+        )}
+      </div>
+      {cartItems.length > 0 && (
+        <div className="cart-footer">
+          <h3>Total: ${cartTotal.toFixed(2)}</h3>
+          <Link to="/cart" onClick={closeCart}>
+            <button>Go to Cart</button>
+          </Link>
+        </div>
       )}
-      <p>Total: ${total.toLocaleString()}</p>
-    </aside>
+    </div>
   );
-}
+};
 
 export default CartSidebar;

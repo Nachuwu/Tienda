@@ -1,35 +1,44 @@
-import React from "react";
+import React from 'react';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
-function CartPage({ cartItems, total, removeFromCart, updateQuantity }) {
+const CartPage = () => {
+  const { cartItems, cartTotal, addToCart, removeFromCart } = useCart();
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="cart-page">
+        <h1>Tu Carrito</h1>
+        <p>No tienes productos en tu carrito. <Link to="/productos">¡Empieza a comprar!</Link></p>
+      </div>
+    );
+  }
+
   return (
-    <section>
-      <h2>Carrito de Compras</h2>
-      {cartItems.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
-      ) : (
-        <>
-          {cartItems.map(item => (
-            <div key={item.id}>
-              <h4>{item.name}</h4>
-              <p>${item.price.toLocaleString()}</p>
-              <div>
-                Cantidad:
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                {item.quantity}
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
-              </div>
-              <button onClick={() => removeFromCart(item.id)}>Eliminar</button>
-              <hr />
-            </div>
-          ))}
-          <p><strong>Total:</strong> ${total.toLocaleString()}</p>
-          <button onClick={() => alert("Aquí iría el medio de pago")}>
-            Proceder al pago
-          </button>
-        </>
-      )}
-    </section>
+    <div className="cart-page">
+      <h1>Tu Carrito</h1>
+      {cartItems.map(item => (
+        <div key={item.id} className="cart-page-item">
+          <img src={item.image} alt={item.title} />
+          <div className="cart-page-item-info">
+            <h3>{item.title}</h3>
+            <p>${item.price.toFixed(2)}</p>
+          </div>
+          <div className="cart-page-item-actions">
+            <button onClick={() => removeFromCart(item.id)}>-</button>
+            <span>{item.quantity}</span>
+            <button onClick={() => addToCart(item)}>+</button>
+          </div>
+        </div>
+      ))}
+      <div className="cart-page-total">
+        <strong>Total: ${cartTotal.toFixed(2)}</strong>
+      </div>
+      <div className="cart-page-actions">
+        <button className="checkout-btn" disabled>Proceder al Pago</button>
+      </div>
+    </div>
   );
-}
+};
 
 export default CartPage;
