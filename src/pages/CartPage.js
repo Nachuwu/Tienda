@@ -8,8 +8,11 @@ const CartPage = () => {
   if (cartItems.length === 0) {
     return (
       <div className="cart-page">
-        <h1>Tu Carrito</h1>
-        <p>No tienes productos en tu carrito. <Link to="/productos">¡Empieza a comprar!</Link></p>
+        <div className="cart-empty">
+          <h2>Tu Carrito está vacío</h2>
+          <p>Parece que aún no has añadido nada. ¡Explora nuestros productos!</p>
+          <Link to="/productos" className="btn-shop">Ir a Productos</Link>
+        </div>
       </div>
     );
   }

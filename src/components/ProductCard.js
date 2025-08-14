@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
       <div className="product-card-body">
         <h3>{product.title}</h3>
         <p>${product.price.toFixed(2)}</p>
-        <button onClick={() => addToCart(product)}>Add to Cart</button>
+        <button onClick={() => addToCart(product)}>Añadir al carrito</button>
       </div>
     </div>
   );

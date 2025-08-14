@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <nav>
-        <Link to="/" className="nav-brand">Tienda React</Link>
+        <Link to="/" className="nav-brand">Nombre</Link>
         <div className="nav-links">
           <Link to="/">Inicio</Link>
           <Link to="/productos">Productos</Link>
